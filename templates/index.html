@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Home &mdash; PredictionHub{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-inner">
+        <h1>Predict with <span class="gold">Precision</span> & <span class="gold">Elegance</span></h1>
+        <p class="subtitle">Two intelligent prediction systems, unified in one beautiful golden experience.</p>
+        <div class="hero-actions">
+            <a class="btn btn-gold" href="{{ url_for('house') }}">House Price Predictor</a>
+            <a class="btn btn-outline" href="{{ url_for('spotify') }}">Spotify Popularity</a>
+        </div>
+    </div>
+</section>
+
+<section class="cards">
+    <a class="card" href="{{ url_for('house') }}">
+        <div class="card-icon">&#127969;</div>
+        <h3>House Price Prediction</h3>
+        <p>Estimate property value in Crore using area, bedrooms, bathrooms, floors and rate.</p>
+        <span class="card-link">Explore &rarr;</span>
+    </a>
+    <a class="card" href="{{ url_for('spotify') }}">
+        <div class="card-icon">&#127925;</div>
+        <h3>Spotify Popularity</h3>
+        <p>Predict a track's popularity from audio features like danceability, energy & genre.</p>
+        <span class="card-link">Explore &rarr;</span>
+    </a>
+    <a class="card" href="{{ url_for('analyze') }}">
+        <div class="card-icon">&#128202;</div>
+        <h3>Model Analysis</h3>
+        <p>Compare both models' performance (R&sup2;, MAE, RMSE) side by side.</p>
+        <span class="card-link">Explore &rarr;</span>
+    </a>
+</section>
+{% endblock %}

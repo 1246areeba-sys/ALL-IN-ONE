@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Spotify Popularity &mdash; PredictionHub{% endblock %}
+{% block content %}
+<section class="page-head">
+    <h1><span class="gold">&#127925;</span> Spotify Song Popularity</h1>
+    <p>Dataset: <strong>{{ shape[0] }}</strong> tracks &middot; Target: <strong>popularity (0&ndash;100)</strong></p>
+</section>
+
+<div class="metrics">
+    <div class="metric"><span class="m-val">{{ metrics.r2 }}</span><span class="m-label">R&sup2; Score</span></div>
+    <div class="metric"><span class="m-val">{{ metrics.mae }}</span><span class="m-label">MAE</span></div>
+    <div class="metric"><span class="m-val">{{ metrics.rmse }}</span><span class="m-label">RMSE</span></div>
+</div>
+
+<section class="grid-2">
+    <div class="panel">
+        <h2>Make a Prediction</h2>
+        <form id="spotifyForm" class="form">
+            <label>Danceability (0-1) <input type="number" step="any" name="danceability" placeholder="0.6" value="0.6"></label>
+            <label>Energy (0-1) <input type="number" step="any" name="energy" placeholder="0.7" value="0.7"></label>
+            <label>Tempo (BPM) <input type="number" step="any" name="tempo" placeholder="120" value="120"></label>
+            <label>Loudness (dB) <input type="number" step="any" name="loudness" placeholder="-7" value="-7"></label>
+            <label>Valence (0-1) <input type="number" step="any" name="valence" placeholder="0.5" value="0.5"></label>
+            <label>Acousticness (0-1) <input type="number" step="any" name="acousticness" placeholder="0.3" value="0.3"></label>
+            <label>Duration (ms) <input type="number" step="any" name="duration_ms" placeholder="200000" value="200000"></label>
+            <label>Genre
+                <select name="playlist_genre">
+                    {% for g in genres %}<option value="{{ g }}">{{ g }}</option>{% endfor %}
+                </select>
+            </label>
+            <label>Subgenre
+                <select name="playlist_subgenre">
+                    {% for s in subgenres %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+                </select>
+            </label>
+            <button type="submit" class="btn btn-gold">Predict Popularity</button>
+        </form>
+        <div id="spotifyResult" class="result-box hidden">
+            <span class="result-label">Predicted Popularity</span>
+            <span class="result-value"><span id="spotifyVal">&mdash;</span> <small>/ 100</small></span>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Feature Importance</h2>
+        <ul class="importance">
+            {% for f in feat_imp %}
+            <li>
+                <span class="imp-name">{{ f.feature }}</span>
+                <span class="imp-bar"><span class="imp-fill" style="width:{{ (f.importance*100)|round(1) }}%"></span></span>
+                <span class="imp-num">{{ (f.importance*100)|round(1) }}%</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Data Visualisations</h2>
+    <div class="graphs">
+        <img src="data:image/png;base64,{{ graphs.pop }}" alt="Popularity distribution">
+        <img src="data:image/png;base64,{{ graphs.dance }}" alt="Danceability vs popularity">
+        <img src="data:image/png;base64,{{ graphs.genre }}" alt="Genre vs popularity">
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('spotifyForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const btn = this.querySelector('button');
+    btn.disabled = true; btn.textContent = 'Predicting...';
+    const data = new FormData(this);
+    const res = await fetch("{{ url_for('spotify_predict') }}", {method:'POST', body: data});
+    const json = await res.json();
+    document.getElementById('spotifyVal').textContent = json.prediction;
+    document.getElementById('spotifyResult').classList.remove('hidden');
+    btn.disabled = false; btn.textContent = 'Predict Popularity';
+});
+</script>
+{% endblock %}

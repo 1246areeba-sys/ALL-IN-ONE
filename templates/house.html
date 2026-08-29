@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}House Price &mdash; PredictionHub{% endblock %}
+{% block content %}
+<section class="page-head">
+    <h1><span class="gold">&#127969;</span> House Price Prediction</h1>
+    <p>Dataset: <strong>{{ shape[0] }}</strong> cleaned properties &middot; Target: price in <strong>Crore</strong></p>
+</section>
+
+<div class="metrics">
+    <div class="metric"><span class="m-val">{{ metrics.r2 }}</span><span class="m-label">R&sup2; Score</span></div>
+    <div class="metric"><span class="m-val">{{ metrics.mae }}</span><span class="m-label">MAE (Crore)</span></div>
+    <div class="metric"><span class="m-val">{{ metrics.rmse }}</span><span class="m-label">RMSE</span></div>
+</div>
+
+<section class="grid-2">
+    <div class="panel">
+        <h2>Make a Prediction</h2>
+        <form id="houseForm" class="form">
+            <label>Area (sq.m) <input type="number" step="any" name="area_sqm" placeholder="e.g. 200" value="200"></label>
+            <label>Rate per sq.ft <input type="number" step="any" name="rate_per_sqft" placeholder="e.g. 20000" value="20000"></label>
+            <label>Bedrooms <input type="number" step="any" name="bedRoom_n" placeholder="e.g. 3" value="3"></label>
+            <label>Bathrooms <input type="number" step="any" name="bathroom_n" placeholder="e.g. 2" value="2"></label>
+            <label>Balconies <input type="number" step="any" name="balcony_n" placeholder="e.g. 2" value="2"></label>
+            <label>Floors <input type="number" step="any" name="noOfFloor_n" placeholder="e.g. 2" value="2"></label>
+            <button type="submit" class="btn btn-gold">Predict Price</button>
+        </form>
+        <div id="houseResult" class="result-box hidden">
+            <span class="result-label">Predicted Price</span>
+            <span class="result-value"><span id="houseVal">&mdash;</span> <small>Crore</small></span>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Feature Importance</h2>
+        <ul class="importance">
+            {% for f in feat_imp %}
+            <li>
+                <span class="imp-name">{{ f.feature }}</span>
+                <span class="imp-bar"><span class="imp-fill" style="width:{{ (f.importance*100)|round(1) }}%"></span></span>
+                <span class="imp-num">{{ (f.importance*100)|round(1) }}%</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Data Visualisations</h2>
+    <div class="graphs">
+        <img src="data:image/png;base64,{{ graphs.price }}" alt="Price distribution">
+        <img src="data:image/png;base64,{{ graphs.area }}" alt="Area vs price">
+        <img src="data:image/png;base64,{{ graphs.bed }}" alt="Bedrooms vs price">
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('houseForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const btn = this.querySelector('button');
+    btn.disabled = true; btn.textContent = 'Predicting...';
+    const data = new FormData(this);
+    const res = await fetch("{{ url_for('house_predict') }}", {method:'POST', body: data});
+    const json = await res.json();
+    document.getElementById('houseVal').textContent = json.prediction;
+    document.getElementById('houseResult').classList.remove('hidden');
+    btn.disabled = false; btn.textContent = 'Predict Price';
+});
+</script>
+{% endblock %}

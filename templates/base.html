@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Prediction Hub{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+            <span class="logo">&#9670;</span>
+            <span class="brand-text">Prediction<span class="gold">Hub</span></span>
+        </div>
+        <nav>
+            <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+            <a href="{{ url_for('house') }}" class="{% if request.endpoint == 'house' %}active{% endif %}">House Price</a>
+            <a href="{{ url_for('spotify') }}" class="{% if request.endpoint == 'spotify' %}active{% endif %}">Spotify</a>
+            <a href="{{ url_for('analyze') }}" class="{% if request.endpoint == 'analyze' %}active{% endif %}">Analyze</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 PredictionHub &mdash; Built with Flask, scikit-learn & a golden touch.</p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,489 @@
+:root {
+    --gold: #d4af37;
+    --gold-dark: #b8860b;
+    --gold-soft: #f7ecc9;
+    --white: #ffffff;
+    --cream: #fdfbf5;
+    --ink: #2b2b2b;
+    --muted: #7a7468;
+    --shadow: 0 10px 30px rgba(212, 175, 55, .18);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fffdf7 0%, #fdf6e3 100%);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(255, 255, 255, .85);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Playfair Display', serif
+}
+
+.logo {
+    color: var(--gold);
+    font-size: 22px
+}
+
+.brand-text {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: .5px
+}
+
+.gold {
+    color: var(--gold)
+}
+
+.navbar nav {
+    display: flex;
+    gap: 26px
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 500;
+    padding: 6px 4px;
+    position: relative;
+    transition: color .2s;
+}
+
+.navbar nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 0;
+    background: var(--gold);
+    transition: width .25s;
+}
+
+.navbar nav a:hover,
+.navbar nav a.active {
+    color: var(--gold-dark)
+}
+
+.navbar nav a:hover::after,
+.navbar nav a.active::after {
+    width: 100%
+}
+
+/* Layout */
+.container {
+    flex: 1;
+    max-width: 1180px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 24px
+}
+
+.footer {
+    text-align: center;
+    padding: 22px;
+    color: var(--muted);
+    border-top: 1px solid var(--gold-soft);
+    font-size: 14px;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: radial-gradient(circle at 50% 0%, #fff7e0 0%, transparent 60%);
+    border-radius: 24px;
+    margin-bottom: 36px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 46px;
+    line-height: 1.15
+}
+
+.subtitle {
+    margin: 16px 0 28px;
+    color: var(--muted);
+    font-size: 18px
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 13px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    transition: transform .15s, box-shadow .2s;
+}
+
+.btn-gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff;
+    box-shadow: var(--shadow)
+}
+
+.btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(212, 175, 55, .35)
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold-dark)
+}
+
+.btn-outline:hover {
+    background: var(--gold-soft)
+}
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px
+}
+
+.card {
+    background: var(--white);
+    border: 1px solid var(--gold-soft);
+    border-radius: 20px;
+    padding: 30px 24px;
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .05);
+    transition: transform .2s, box-shadow .2s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow)
+}
+
+.card-icon {
+    font-size: 38px;
+    margin-bottom: 12px
+}
+
+.card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5
+}
+
+.card-link {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--gold-dark);
+    font-weight: 600
+}
+
+/* Page head */
+.page-head {
+    text-align: center;
+    margin-bottom: 28px
+}
+
+.page-head h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px
+}
+
+.page-head p {
+    color: var(--muted);
+    margin-top: 8px
+}
+
+/* Metrics */
+.metrics {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px
+}
+
+.metric {
+    background: var(--white);
+    border: 1px solid var(--gold-soft);
+    border-radius: 16px;
+    padding: 18px 30px;
+    text-align: center;
+    min-width: 150px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
+}
+
+.m-val {
+    display: block;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    font-family: 'Playfair Display', serif
+}
+
+.m-label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px
+}
+
+/* Grid + panels */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px
+}
+
+.panel {
+    background: var(--white);
+    border: 1px solid var(--gold-soft);
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .05);
+}
+
+.panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    margin-bottom: 18px;
+    color: var(--ink)
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 14px
+}
+
+/* Forms */
+.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px
+}
+
+.form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    color: var(--muted);
+    gap: 6px;
+    font-weight: 500
+}
+
+.form input,
+.form select {
+    padding: 11px 12px;
+    border: 1px solid var(--gold-soft);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink);
+}
+
+.form input:focus,
+.form select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, .2)
+}
+
+.form button {
+    grid-column: 1/-1;
+    margin-top: 6px
+}
+
+/* Result */
+.result-box {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #fff7e0, #fdeec2);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+}
+
+.result-box.hidden {
+    display: none
+}
+
+.result-label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px
+}
+
+.result-value {
+    display: block;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    font-family: 'Playfair Display', serif;
+    margin-top: 6px
+}
+
+.result-value small {
+    font-size: 16px;
+    color: var(--muted)
+}
+
+/* Importance */
+.importance {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.importance li {
+    display: grid;
+    grid-template-columns: 140px 1fr 56px;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px
+}
+
+.imp-name {
+    font-weight: 500
+}
+
+.imp-bar {
+    background: var(--gold-soft);
+    border-radius: 8px;
+    height: 12px;
+    overflow: hidden
+}
+
+.imp-fill {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark))
+}
+
+.imp-num {
+    text-align: right;
+    color: var(--gold-dark);
+    font-weight: 600
+}
+
+/* Graphs */
+.graphs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px
+}
+
+.graphs img {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid var(--gold-soft);
+    background: #fff
+}
+
+/* Tables */
+.metrics-table {
+    width: 100%;
+    border-collapse: collapse
+}
+
+.metrics-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--gold-soft);
+    font-size: 15px
+}
+
+.metrics-table td:last-child {
+    text-align: right;
+    font-weight: 600
+}
+
+.metrics-table .gold {
+    color: var(--gold-dark);
+    font-size: 18px
+}
+
+/* Steps */
+.steps {
+    margin-left: 20px;
+    line-height: 1.9;
+    color: var(--ink)
+}
+
+.steps li {
+    margin-bottom: 6px
+}
+
+.steps code {
+    background: var(--gold-soft);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px
+}
+
+@media(max-width:760px) {
+    .grid-2 {
+        grid-template-columns: 1fr
+    }
+
+    .form {
+        grid-template-columns: 1fr
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 12px
+    }
+
+    .hero h1 {
+        font-size: 34px
+    }
+}

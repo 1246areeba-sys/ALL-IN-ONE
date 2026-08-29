@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Analyze &mdash; PredictionHub{% endblock %}
+{% block content %}
+<section class="page-head">
+    <h1><span class="gold">&#128202;</span> Model Analysis</h1>
+    <p>Performance comparison of both prediction models.</p>
+</section>
+
+<section class="grid-2">
+    <div class="panel">
+        <h2>&#127969; House Price Model</h2>
+        <p class="muted">Trained on {{ house_shape[0] }} samples with {{ house_shape[1] }} features.</p>
+        <table class="metrics-table">
+            <tr><td>R&sup2; Score</td><td class="gold">{{ house_metrics.r2 }}</td></tr>
+            <tr><td>MAE</td><td>{{ house_metrics.mae }} Crore</td></tr>
+            <tr><td>RMSE</td><td>{{ house_metrics.rmse }}</td></tr>
+        </table>
+    </div>
+    <div class="panel">
+        <h2>&#127925; Spotify Model</h2>
+        <p class="muted">Trained on {{ spotify_shape[0] }} samples with {{ spotify_shape[1] }} features.</p>
+        <table class="metrics-table">
+            <tr><td>R&sup2; Score</td><td class="gold">{{ spotify_metrics.r2 }}</td></tr>
+            <tr><td>MAE</td><td>{{ spotify_metrics.mae }}</td></tr>
+            <tr><td>RMSE</td><td>{{ spotify_metrics.rmse }}</td></tr>
+        </table>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>How it works</h2>
+    <ol class="steps">
+        <li><strong>Data Loading</strong> &mdash; both CSV datasets are read with pandas.</li>
+        <li><strong>Data Understanding</strong> &mdash; shapes, nulls and distributions are inspected.</li>
+        <li><strong>Data Cleaning</strong> &mdash; messy text (prices, rates) parsed to numbers; non-predictive columns dropped.</li>
+        <li><strong>Fill & Drop</strong> &mdash; missing targets dropped; numeric nulls filled with median, categorical with mode.</li>
+        <li><strong>Convert</strong> &mdash; categoricals label-encoded, features standard-scaled.</li>
+        <li><strong>Split</strong> &mdash; 80/20 train/test.</li>
+        <li><strong>Model</strong> &mdash; RandomForestRegressor trained and saved as <code>.pkl</code>.</li>
+    </ol>
+</section>
+{% endblock %}
